@@ -1,0 +1,321 @@
+$break-small: 510px;
+$break-large: 511px;
+
+$table-colour: #bc5617;
+
+$defaultC:		$table-colour;
+$lighter:		lighten($table-colour, 10%);
+$lightest:	lighten($table-colour, 20%);
+$darkest:	darken($table-colour, 20%);
+
+$nthOddC:	lighten($table-colour, 65%);
+$nthEvenC:	lighten($table-colour, 55%);
+
+$lightText: #ffe;
+$darkText: #111;
+
+@mixin browserSupport($propName, $propVar){
+	-webkit-#{$propName}: $propVar;
+	-khtml-#{$propName}: $propVar;
+	-moz-#{$propName}: $propVar;
+	-ms-#{$propName}: $propVar;
+	#{$propName}: $propVar;
+}
+
+@mixin height-width($height: 100%, $width: 100%) {
+	height: $height;
+  width: $width
+}
+
+
+@mixin button-css($colour, $text, $height: 50%, $width: 70% ){
+  height: $height;
+  width: $width;
+	background-image: linear-gradient(-13deg, $colour 10%, lighten($colour, 20%) 56%),
+										linear-gradient(274deg, $colour, lighten($colour, 20%));
+  border: 2px ridge lighten($colour, 20%);
+  margin:auto;
+  text-align: center;
+  padding: 2px 2px;
+  border-radius: 3px;
+  display: flex;
+  box-shadow: 0 0px 1px 1px #000;
+
+	span{
+				font-weight: bold;
+				font-size: 14px;
+				margin: auto;
+				color:$lightText;
+        @include height-width(auto, auto);
+				&:after{
+					content: $text;
+				}
+			}
+
+	&:hover{
+		@include browserSupport(filter, brightness(120%));
+    cursor: pointer;
+	}
+	&:active{
+		@include browserSupport(filter, brightness(85%));
+	}
+}
+
+.inactive-button{
+	@include browserSupport(filter, grayscale(100%) !important)
+	&:hover{
+		@include browserSupport(filter, brightness(100%) grayscale(100%) !important);
+		cursor: default !important;
+	}
+	&:active{
+		@include browserSupport(filter, brightness(100%) grayscale(100%) !important);
+	}
+}
+
+@mixin grid-arrange($rs:1, $re:1, $cs:1, $ce:1) {
+  display: grid;
+  display: -ms-grid;
+
+	grid-row-start: $rs;
+	grid-row-end: $re;
+	grid-column-start: $cs;
+	grid-column-end: $ce;
+}
+@mixin grid-template($gtr: 100%, $gtc: 100%) {
+  display: grid;
+  display: -ms-grid;
+  grid-template-rows: $gtr;
+  grid-template-columns: $gtc
+
+}
+
+html, body, #root{
+  @include height-width();
+	margin: 0 auto;
+	font-family: Courier New;
+}
+
+	::-webkit-scrollbar {
+		display: none;
+	}
+.header, .logo-container, .logo, .image-container,
+.currency-container, .currency {
+	margin:auto;
+	width: 100%;
+	height:auto;
+	max-width:750px;
+
+}
+
+ .error_occurred, .table_loading{
+	 margin:auto;
+	 display: block;
+	 @include height-width(100%,auto);
+ }
+
+table.currency {
+	color: $darkText;
+  border: 0px solid $defaultC;
+  background-color: $nthOddC;
+  text-align: center;
+  border-collapse: collapse;
+
+	tbody, thead, tfoot{
+		tr{
+			td, th{
+				border: 1px solid $lightest;
+			  padding: 4px 4px;
+			}
+		}
+		tr:nth-child(even) {
+		  background: $nthEvenC;
+		}
+	}
+
+thead{
+
+	tr.headOptions{
+		th{
+			.searchNameTxt, .cryptoTypeSelect,
+			.filterCur, .filterTotal, .setInterval{
+				width:4em;
+				margin: 0 5px;
+				padding: 2px 0;
+				display: block;
+			}
+			.setIntervalLabel{
+				width: 13em;
+				font-size: 11px;
+				margin-right: -5px;
+				padding-top: 5px;
+				display: block;
+			}
+			.searchNameTxt{width:7em !important;}
+			.searchNameTxt, .cryptoTypeSelect, .compareButton{
+				float:left;
+			}
+
+			.compareButton{
+				@include button-css($defaultC, "", auto, auto );
+				margin: 0 5px;
+			}
+
+			.filterCur, .filterTotal, .setInterval, .setIntervalLabel{
+				float:right;
+			}
+		}
+	}
+
+	tr.headNavigation {
+	  font-size: 14px;
+	  font-weight: bold;
+	  color: $lightText;
+	  background: $nthEvenC;
+	  @include browserSupport('background', linear-gradient(top, #fff 0%, $nthEvenC 66%, $nthOddC 100%));
+	  border-bottom: 2px solid $darkest;
+			th {
+
+				.navLeftContainer{
+					width:30%;
+				}
+				.navMiddleContainer{
+					width:40%;
+				}
+				.navRightContainer{
+					width:30%;
+				}
+
+					.linkBack, .linkForward {
+						@include button-css($defaultC, "", 3vh, 3vh );
+					}
+					.linkBack {float:left;}
+					.linkForward {float:right;}
+					.linkMiddle {
+						margin:auto;
+						height:auto;
+						color:$darkText;
+						span{
+								font-size:20px;
+							}
+					}
+				}
+		}
+
+	tr.headTitles {
+		  background: $defaultC;
+			@include browserSupport('background', linear-gradient(to bottom, $lightest 0%, $lighter 66%, $defaultC 100%));
+		  border-bottom: 2px solid $darkest;
+			th {
+				  font-size: 13px;
+				  font-weight: bold;
+				  color: $lightText;
+				  text-align: center;
+				  border-left: 2px solid $defaultC;
+					span{
+							display:inline-block;
+							white-space: nowrap;
+					  	overflow: hidden;
+					  	text-overflow: ellipsis;
+					}
+					span:first-child{
+						width:80%;
+						.timeScaleSelectChange{
+								cursor:pointer;
+								width:2em;
+		    				-webkit-appearance: none;
+						}
+					}
+					span:nth-child(2) {
+					  	width:20%;
+							cursor:pointer;
+							.sortingArrow{
+								@include height-width(8px,12px);
+								@include browserSupport(filter, invert(100%));
+								&:active{
+									@include browserSupport(filter, invert(80%) !important);
+								}
+
+							}
+							&:active{
+									.sortingArrow{
+											@include browserSupport(filter, invert(80%) !important);
+										}
+							}
+					}
+			}
+			th:first-child {
+			  border-left: none;
+			}
+
+	}
+
+}
+	tbody{
+			td{
+					font-size: 13px;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+
+					img{
+						margin-right:5px ;
+						transform: translateY(4px);
+
+					}
+
+			}
+			td:nth-child(4), td:nth-child(5),
+			td:nth-child(6), td:nth-child(7) {
+					text-align: right;
+			}
+			td:nth-child(3) {
+					text-align: left;
+			}
+			td:nth-child(8) {
+					font-weight: bold;
+			}
+	}
+}
+
+
+
+
+
+.flip-container {
+	position: absolute;
+	@extend %flipDimentions;
+	top: 150px;
+	perspective: 5000px;
+
+	.flip {
+		transform: rotateY(360deg);
+	}
+
+}
+
+%flipDimentions {
+  @include height-width();
+}
+
+
+.flipper {
+	transition: 1s;
+	transform-style: preserve-3d;
+	position: relative;
+}
+
+%frontback {
+  @extend %flipDimentions;
+	backface-visibility: hidden;
+	position: absolute;
+}
+
+.front {
+  @extend %frontback;
+	z-index: 2;
+	transform: rotateY(0deg);
+}
+
+.back {
+  @extend %frontback;
+	transform: rotateY(180deg);
+}
