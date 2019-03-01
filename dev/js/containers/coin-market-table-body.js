@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {apply_sorting,compare_list_update} from '../actions/actions-index';
+import {apply_sorting, compare_list_update, set_run_flip_animation} from '../actions/actions-index';
 
 class CoinMarketTableBody extends Component{
 
@@ -100,11 +100,13 @@ class CoinMarketTableBody extends Component{
 
       let checked = this.props.compare_list.includes(coin) ? true : false;
 
+      let crypto_logo = "https://s2.coinmarketcap.com/static/img/coins/16x16/" + id + ".png"
+
      table.push(
                <tr key={id}>
                  <th><input type="checkbox" defaultChecked={checked} id={"key"+pos} onChange={(e) => this.addToCompare(e.target.checked, coin)} /></th>
                  <td>{pos}</td>
-                 <td><img src={"https://s2.coinmarketcap.com/static/img/coins/16x16/" + id + ".png"} />{name}</td>
+                 <td><img src={crypto_logo} />{name}</td>
                  <td>{market_cap}</td>
                  <td>{price}</td>
                  <td>{volume_24h}</td>
@@ -112,8 +114,9 @@ class CoinMarketTableBody extends Component{
                  <td style={style}>{change}</td>
                </tr>
           );
-        }
 
+        }
+        setTimeout(() => { this.props.set_run_flip_animation(false) }, 500);
         return table;
 
       }
@@ -130,8 +133,7 @@ class CoinMarketTableBody extends Component{
         compare_list.push(coin);
         compare_list = this.props.apply_sorting(compare_list, this.props.view_sort_obj);
       }
-
-      this.props.compare_list_update(compare_list);
+      this.props.compare_list_update(compare_list)
     }
 
   render(){
@@ -181,7 +183,8 @@ function matchDispatchToProps(dispatch){
 
   return {
       apply_sorting: (coins, sortObj) => apply_sorting(coins, sortObj),
-      compare_list_update: (compare_list) => dispatch(compare_list_update(compare_list))
+      compare_list_update: (compare_list) => dispatch(compare_list_update(compare_list)),
+      set_run_flip_animation: (run) => dispatch(set_run_flip_animation(run))
   }
 
 }

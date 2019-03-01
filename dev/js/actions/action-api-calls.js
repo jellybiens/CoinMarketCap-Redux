@@ -5,45 +5,92 @@ import {fetchIsLoading,
         main_coins_list_update,
         search_res_list_update,
         compare_list_update,
-        set_crypto_type_ids} from './actions-index'
+        set_crypto_type_ids
+        } from './actions-index'
 import { filter_tokens_and_coins } from './action-filter-crypto-types';
+import { apply_sorting } from './action-sort';
 
 
-const update_lists_after_refresh = (coins_lists) => {
 
-  let main_coins    = coins_lists.main_list;
-  let search_coins  = coins_lists.search_list.slice();
-  let compare_coins = coins_lists.compare_list.slice();
+//INITIALISE datasets from API
 
-  let search_updated = search_coins.length > 0 ? update_list_data(main_coins, search_coins) : [];
-  let compare_updated = compare_coins.length > 0 ? update_list_data(main_coins, compare_coins) : [];
+//get a list of tokens coins to create 2 arrays to filter through results based on crypto type
+export const fill_crypto_type_data_set = () => {
+
+console.log("api: fill_crypto_type_data_set");
+
+  const url = 'api/cryptocurrency/listings/latest';
+  let coinsOptions = {
+    method: 'GET',
+    params: { limit: 5000,
+              convert:  "EUR",
+              cryptocurrency_type: "coins"
+            },
+    headers: { 'X-CMC_PRO_API_KEY': '5ef4101a-93b7-4b32-9367-824a9c3b978a' },
+    json: true,
+    gzip: true
+  };
+  let tokensOptions = JSON.parse(JSON.stringify(coinsOptions))
+  tokensOptions.params["cryptocurrency_type"] = "tokens";
 
   return (dispatch) => {
-      dispatch(search_res_list_update(search_updated));
-      dispatch(compare_list_update(compare_updated));
+    dispatch(fetchIsLoading(true));
+    //get coins
+    axios.get(url, coinsOptions)
+          .then(res1 => {
+              let coins = res1.data.data
+              //get tokens
+              axios.get(url, tokensOptions)
+                    .then(res2 => {
+                      let tokens = res2.data.data;
+                        list_initialisation(dispatch, coins, tokens)
+                        dispatch(fetchIsLoading(false));
+                    })
+                    .catch(error => {
+                        dispatch(fetchHasErrored(true));
+                        console.log(error);
+                    });
+
+
+
+          })
+          .catch(error => {
+              dispatch(fetchHasErrored(true));
+              console.log(error);
+          });
   }
 
 }
 
-const update_list_data = (main_list, sorting_list) => {
+const list_initialisation = (dispatch, coins, tokens) => {
 
-  var update_list = [];
+  let cryptoTypeIds = filter_tokens_and_coins(coins, tokens);
+  dispatch(set_crypto_type_ids(cryptoTypeIds));
 
-  sorting_list.find(coin1 => {
-    update_list.push(
-      main_list.find(coin2 => {
-         return coin1.id === coin2.id;
-      })
-    )
-  })
+  let sortObj = {
+    "convert":"EUR",
+    "sort":"market_cap",
+    "sort_dir":"desc",
+    "changeTimescale":"percent_change_7d"
+  }
 
-  return update_list;
+  let main_coins_list = coins.concat(tokens);
+  main_coins_list = apply_sorting(main_coins_list, sortObj);
+  dispatch(main_coins_list_update(main_coins_list));
 }
 
 
-export const fill_coins_data_set = (sortObj, coins_lists) => {
 
-    console.log("api: fill_coins_data_set");
+
+
+
+
+//UPDATE datasets from API
+
+
+export const refresh_coins_data_set = (sortObj, coins_lists) => {
+
+    console.log("api: refresh_coins_data_set");
 
     //flip the name sorting because we sort a>z as desc, to make the arrows on sorting flow more easily
     //just slightly hacky to get them to communicate nicely
@@ -69,10 +116,11 @@ export const fill_coins_data_set = (sortObj, coins_lists) => {
       axios.get(url, requestOptions)
             .then(response => {
                 dispatch(main_coins_list_update(response.data.data));
-                dispatch(view_sort_obj_update(sortObj));
+                dispatch(view_sort_obj_update(sortObj))
+
                 coins_lists.main_list = response.data.data;
-                dispatch(update_lists_after_refresh(coins_lists)),
-                dispatch(fetchIsLoading(false));
+                //updates search and compare lists so that the money conversion is correct
+                dispatch(update_lists_after_refresh(coins_lists))
             })
             .catch(error => {
                 dispatch(fetchHasErrored(true));
@@ -82,54 +130,36 @@ export const fill_coins_data_set = (sortObj, coins_lists) => {
 }
 
 
-  //get a list of tokens coins to create 2 arrays to filter through results based on crypto type
-export const fill_crypto_type_data_set = () => {
+//updates search and compare lists so that data is up to date and the money conversion is correct
+const update_lists_after_refresh = (coins_lists) => {
 
-  console.log("api: fill_crypto_type_data_set");
+  let main_coins    = coins_lists.main_list;
+  let search_coins  = coins_lists.search_list.slice();
+  let compare_coins = coins_lists.compare_list.slice();
 
-    const url = 'api/cryptocurrency/listings/latest';
-    const coinsOptions = {
-      method: 'GET',
-      params: { limit: 5000,
-                "cryptocurrency_type": "coins"
-              },
-      headers: { 'X-CMC_PRO_API_KEY': '5ef4101a-93b7-4b32-9367-824a9c3b978a' },
-      json: true,
-      gzip: true
-    };
-    const tokensOptions = {
-      method: 'GET',
-      params: { limit: 5000,
-                "cryptocurrency_type": "tokens"
-              },
-      headers: { 'X-CMC_PRO_API_KEY': '5ef4101a-93b7-4b32-9367-824a9c3b978a' },
-      json: true,
-      gzip: true
-    };
+  let search_updated = search_coins.length > 0 ? update_list_data(main_coins, search_coins) : [];
+  let compare_updated = compare_coins.length > 0 ? update_list_data(main_coins, compare_coins) : [];
 
-    let coins = [];
+  return (dispatch) => {
+      dispatch(search_res_list_update(search_updated));
+      dispatch(compare_list_update(compare_updated));
+  }
 
-    return (dispatch) => {
-      dispatch(fetchIsLoading(true));
-      axios.get(url, coinsOptions)
-            .then(response => {
-                coins = response.data.data
-            })
-            .catch(error => {
-                dispatch(fetchHasErrored(true));
-                console.log(error);
-            });
-      axios.get(url, tokensOptions)
-            .then(response => {
-                let cryptoTypeIds = filter_tokens_and_coins(coins, response.data.data);
-                dispatch(set_crypto_type_ids(cryptoTypeIds));
-            })
-            .catch(error => {
-                dispatch(fetchHasErrored(true));
-                console.log(error);
-            });
-    }
+}
+//updates search and compare lists so that data is up to date and the money conversion is correct
+const update_list_data = (main_list, sorting_list) => {
 
+  var update_list = [];
+
+  sorting_list.find(coin1 => {
+    update_list.push(
+      main_list.find(coin2 => {
+         return coin1.id === coin2.id;
+      })
+    )
+  })
+
+  return update_list;
 }
 
 

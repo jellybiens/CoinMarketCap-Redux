@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {  fill_coins_data_set, view_sort_obj_update } from '../../actions/actions-index';
+import {  refresh_coins_data_set, view_sort_obj_update } from '../../actions/actions-index';
 
 
 class CurrencyReferenceSelect extends Component{
@@ -33,7 +33,7 @@ class CurrencyReferenceSelect extends Component{
       "compare_list": this.props.compare_list
     };
 
-    this.props.fill_coins_data_set(newQsObj, coins_lists);
+    this.props.refresh_coins_data_set(newQsObj, coins_lists);
 
 
   }
@@ -78,7 +78,7 @@ function mapStateToProps(state){
 function matchDispatchToProps(dispatch){
 
   return {
-      fill_coins_data_set: (qsObj, coins_lists) => dispatch(fill_coins_data_set(qsObj, coins_lists)),
+      refresh_coins_data_set: (qsObj, coins_lists) => dispatch(refresh_coins_data_set(qsObj, coins_lists)),
       view_sort_obj_update: (sortObj) => dispatch(view_sort_obj_update(sortObj))
   }
 

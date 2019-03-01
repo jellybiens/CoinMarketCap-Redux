@@ -1,11 +1,11 @@
-import {fill_coins_data_set,
-        fill_crypto_type_data_set} from './action-api-calls'
+import {refresh_coins_data_set,
+        fill_crypto_type_data_set } from './action-api-calls'
 import {sort_tables,
         apply_sorting} from './action-sort';
 import {search_for_matches} from './action-search';
 
-export {fill_coins_data_set,
-        fill_crypto_type_data_set} from './action-api-calls'
+export {refresh_coins_data_set,
+        fill_crypto_type_data_set } from './action-api-calls'
 export {sort_tables,
         apply_sorting} from './action-sort';
 export {search_for_matches} from './action-search';
@@ -17,6 +17,11 @@ export {search_for_matches} from './action-search';
   export const flip_view = (view) => ({
     type: 'FLIPPER_VIEW',
     view
+  })
+  //is the table view flipped to the compare view?
+  export const set_run_flip_animation = (run) => ({
+    type: 'RUN_FLIP_ANIMATION',
+    run
   })
   //is a search currently in progress
   export const update_is_searching = (is) => ({
@@ -47,6 +52,7 @@ export {search_for_matches} from './action-search';
         type: 'SET_CRYPTO_TYPE_IDS',
         cryptoTypeIds
     })
+
 
 //coins lists and sorting options for the different views
 

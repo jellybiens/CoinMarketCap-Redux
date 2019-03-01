@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { flip_view, search_for_matches } from '../actions/actions-index';
+import { flip_view, set_run_flip_animation, search_for_matches } from '../actions/actions-index';
 
 
 import CryptoSearchText             from './table-head-containers/crypto-search-txt';
@@ -18,14 +18,18 @@ class CoinMarketTableHead extends Component{
 
     flipProcess(){
 
-      //if we are searching, update the search for flipping back and forth
-      if(this.props.is_searching){
-        let val = this.props.search_box_text;
-        let search_list = !this.props.flipped_view ? this.props.compare_list : this.props.main_coins_list;
-        this.props.search_for_matches(val, search_list)
-      }
+      this.props.set_run_flip_animation(!this.props.run_flip_animation);
 
-      this.props.flip_view(!this.props.flipped_view)
+      //delay update so that we can flip the animation and change the view while it is offscreen
+      setTimeout(() => {
+          //if we are searching, update the search for flipping back and forth
+          if(this.props.is_searching){
+            let val = this.props.search_box_text;
+            let search_list = !this.props.flipped_view ? this.props.compare_list : this.props.main_coins_list;
+            this.props.search_for_matches(val, search_list)
+          }
+          this.props.flip_view(!this.props.flipped_view)
+      }, 375);
     }
 
     render() {
@@ -109,7 +113,8 @@ function mapStateToProps(state){
       is_searching: state.is_searching,
       search_box_text: state.search_box_text,
 
-      flipped_view: state.flipped_view
+      flipped_view: state.flipped_view,
+      run_flip_animation: state.run_flip_animation
 
       }
 
@@ -120,6 +125,7 @@ function matchDispatchToProps(dispatch){
 
   return {
       flip_view: (view) => dispatch(flip_view(view)),
+      set_run_flip_animation: (run) => dispatch(set_run_flip_animation(run)),
       search_for_matches: (val, search_list) => dispatch(search_for_matches(val, search_list)),
   }
 

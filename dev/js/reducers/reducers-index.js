@@ -13,7 +13,7 @@ import {  view_sort_obj,
           compare_list } from './reducer-coins-lists-and-sorts';
 
 
-import { flipped_view } from './reducer-flipper-view';
+import { flipped_view, run_flip_animation } from './reducer-flipper-view';
 import { is_searching, search_box_text } from './reducer-is-searching';
 
 const allReducers = combineReducers({
@@ -29,7 +29,7 @@ const allReducers = combineReducers({
 
     currencySymbols,
 
-    flipped_view,
+    flipped_view, run_flip_animation,
     is_searching, search_box_text
 });
 

@@ -7,7 +7,7 @@ export const sort_tables = (coins_lists, sortObj, sort_by) => {
 
   sortObj            = update_sortObj(sortObj, sort_by);
   let sorted_main    = apply_sorting(coins_lists.main_list, sortObj);
-  let sorted_search  = apply_sorting(coins_lists.search_list, sortObj);
+  let sorted_search  = apply_sorting(coins_lists.search_res_list, sortObj);
   let sorted_comapre = apply_sorting(coins_lists.compare_list, sortObj);
 
   let newSortObj = Object.assign({}, sortObj);
@@ -40,53 +40,57 @@ const update_sortObj = (sortObj, sort_by) => {
 
 }
 
+
 export const apply_sorting = (coins, sortObj)  => {
 
   let sort_by = sortObj["sort"];
   let sort_dir = sortObj["sort_dir"];
   let cur = sortObj["convert"];
   let timescale = sortObj["changeTimescale"];
+  let objIndex = sort_by === "circulating_supply" ? "circulating_supply" :
+                  ".quote." + cur + "." + sort_by;
 
   switch(sort_by){
       case 'name' :
-          switch(sort_dir){
-              case 'asc' :
-                coins.sort((a, b) => {
-                  let aName = a.name.toLowerCase();
-                  let bName = b.name.toLowerCase();
-                  if(aName < bName) { return 1; }
-                  if(aName > bName) { return -1; }
-                  return 0;
-                });
-              break;
-              case 'desc' :
-                coins.sort((a, b) => {
-                  let aName = a.name.toLowerCase();
-                  let bName = b.name.toLowerCase();
-                  if(aName < bName) { return -1; }
-                  if(aName > bName) { return 1; }
-                  return 0;
-                });
-              break;
-          }
-    break;
-    case 'circulating_supply' :
-      switch(sort_dir){
-          case 'asc' : coins.sort((a, b) => a.circulating_supply - b.circulating_supply)
-          break;
-          case 'desc' : coins.sort((a, b) => b.circulating_supply - a.circulating_supply)
-          break;
-      }
-    break;
+          coins.sort((a, b) => {
+              let aName = a.name.toLowerCase();
+              let bName = b.name.toLowerCase();
+              if(sort_dir === "asc"){
+                if(aName < bName) { return 1; }
+                if(aName > bName) { return -1; }
+              }
+              if(sort_dir === "desc"){
+                if(aName < bName) { return -1; }
+                if(aName > bName) { return 1; }
+              }
+              return 0;
+            });
+      break;
     default :
-      switch(sort_dir){
-          case 'asc' : coins.sort((a, b) => a.quote[cur][sort_by] - b.quote[cur][sort_by] )
-          break;
-          case 'desc' : coins.sort((a, b) => b.quote[cur][sort_by]  - a.quote[cur][sort_by] )
-          break;
-      }
+      coins.sort((a, b) =>
+        sort_dir === 'asc' ?
+          Object.byString(a, objIndex) - Object.byString(b, objIndex)
+        :
+          Object.byString(b, objIndex) - Object.byString(a, objIndex)
+      );
     break;
   }
 
   return coins;
+}
+
+
+Object.byString = (o, s) => {
+    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+    s = s.replace(/^\./, '');           // strip a leading dot
+    var a = s.split('.');
+    for (var i = 0, n = a.length; i < n; ++i) {
+        var k = a[i];
+        if (k in o) {
+            o = o[k];
+        } else {
+            return;
+        }
+    }
+    return o;
 }

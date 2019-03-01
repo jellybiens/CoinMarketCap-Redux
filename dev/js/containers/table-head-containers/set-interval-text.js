@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { view_sort_obj_update, fill_coins_data_set } from '../../actions/actions-index';
+import { view_sort_obj_update, refresh_coins_data_set } from '../../actions/actions-index';
 
 
 class SetIntervalText extends Component{
@@ -31,10 +31,10 @@ class SetIntervalText extends Component{
               "compare_list": this.props.compare_list
             };
             let qsObj = Object.assign({}, this.props.view_sort_obj);
-            this.props.fill_coins_data_set(qsObj, coins_lists);
+            this.props.refresh_coins_data_set(qsObj, coins_lists);
 
           }, newInterval * 60000);//set newInterval//convert into miliseconds
-          
+
           let qsObj = Object.assign({}, this.props.view_sort_obj);
           qsObj["interval"] = parseInt(newInterval);
           qsObj["setInterval"] = intervalSet;
@@ -84,7 +84,7 @@ function mapStateToProps(state){
 function matchDispatchToProps(dispatch){
 
   return {
-    fill_coins_data_set: (qsObj, coins_lists) => dispatch(fill_coins_data_set(qsObj, coins_lists)),
+    refresh_coins_data_set: (qsObj, coins_lists) => dispatch(refresh_coins_data_set(qsObj, coins_lists)),
     view_sort_obj_update: (sortObj) => dispatch(view_sort_obj_update(sortObj))
   }
 

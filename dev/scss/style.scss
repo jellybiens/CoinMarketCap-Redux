@@ -98,7 +98,7 @@ html, body, #root{
 	::-webkit-scrollbar {
 		display: none;
 	}
-.header, .logo-container, .logo, .image-container,
+.header, .logo-container, .logo, .image-container, .logo-container,
 .currency-container, .currency {
 	margin:auto;
 	width: 100%;
@@ -106,8 +106,19 @@ html, body, #root{
 	max-width:750px;
 
 }
+.logo-image-spin{
+	animation-name: rotate;
+	animation-duration: 1.5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
 
- .error_occurred, .table_loading{
+@keyframes rotate {
+from {transform: rotateY(-90deg);}
+to {transform: rotateY(90deg);}
+}
+
+ .error_occurred, .table_loading, .logo-image{
 	 margin:auto;
 	 display: block;
 	 @include height-width(100%,auto);
@@ -287,7 +298,7 @@ thead{
 	perspective: 5000px;
 
 	.flip {
-		transform: rotateY(360deg);
+		transform: rotateY(180deg);
 	}
 
 }

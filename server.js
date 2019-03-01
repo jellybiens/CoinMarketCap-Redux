@@ -18,6 +18,7 @@ const coinProxy = proxy({
 
 app.use('/api', coinProxy);
 
+
 // the __dirname is the current directory from where the script is running
 app.use(express.static(__dirname + '/src/'));
 

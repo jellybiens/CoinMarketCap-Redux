@@ -21,7 +21,7 @@ class CryptoChangeTimescaleSelect extends Component{
 
       let coins_lists = {
         "main_list": this.props.main_coins_list,
-        "search_list": this.props.search_res_list,
+        "search_res_list": this.props.search_res_list,
         "compare_list": this.props.compare_list
       };
       this.props.sort_tables(coins_lists, sortObj, sort_by);
