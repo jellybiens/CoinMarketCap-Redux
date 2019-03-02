@@ -92,7 +92,7 @@ html, body, #root{
   width: 100%;
 
 	.header{
-		@include height-width(17%, 100%);
+		@include height-width(115px, 100%);
 
 		.logo-cointainer{
 			@include height-width(100%, 100%);
@@ -143,7 +143,7 @@ html, body, #root{
     }
 
 		.theads{
-			@include height-width(17%, 100%);
+			@include height-width(100px, 100%);
 
 			.thead-options{
 				@include height-width(30px, 100%);
@@ -338,6 +338,8 @@ html, body, #root{
 		.tbody{
 			@include height-width(83%, 100%);
       overflow-y: scroll;
+			top: 0;
+    	position: relative;
 
       .flip {
     		@include browserSupport(transform, rotateY(180deg));
