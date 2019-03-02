@@ -19,8 +19,6 @@ export const view_sort_obj = (state = initialQS, action) => {
     }
 }
 
-
-
 export const main_coins_list = (state = [], action) => {
     switch(action.type){
         case 'MAIN_COINS_LIST' : return action.list;

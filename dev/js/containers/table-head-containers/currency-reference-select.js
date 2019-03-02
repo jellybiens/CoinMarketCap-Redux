@@ -43,13 +43,12 @@ class CurrencyReferenceSelect extends Component{
       let qsObj = this.props.view_sort_obj;
 
 
-        return (<cseignore>
+        return (
               <select className="filterCur" defaultValue={qsObj.convert+"-"+qsObj.symbol}
                       onChange={(e) => this.selectChange(e.target.value)}
                     >
                 {this.buildCurrencyOptions()}
               </select>
-              </cseignore>
         );
     }
 

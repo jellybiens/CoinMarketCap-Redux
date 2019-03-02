@@ -1,48 +1,31 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { fill_crypto_type_data_set } from '../actions/actions-index';
+import { fill_crypto_type_data_set, update_view_width } from '../actions/actions-index';
 import CoinMarketTableBody from '../containers/coin-market-table-body';
 import CoinMarketTableHead from '../containers/coin-market-table-head';
 import table_loading from '../images/loading.gif';
 import error_occurred from '../images/error-occurred.jpg';
-import crypto_logo from '../images/crypto-logo.png';
 
 class CoinMarketTable extends Component{
 
 
   componentDidMount(){
     this.props.fill_crypto_type_data_set();
+
+    let width = document.body.clientWidth;
+    this.props.update_view_width(width);
   }
 
   renderTable(){
-    var classNameFlip = this.props.run_flip_animation == false ? "" : " flip";
-    var logoClass = this.props.view_sort_obj["limit"] > 300 ? "logo-image logo-image-spin" : "logo-image";
-    logoClass = this.props.run_flip_animation ? logoClass : "logo-image";
 
       return (
-            <div className="flip-container">
-              <div className={"flipper" + classNameFlip}>
 
-                <div className="front">
-
-                  <div className="currency-container">
-                    <table className='currency'>
-                      <CoinMarketTableHead />
-                      <CoinMarketTableBody  />
-                    </table>
-                  </div>
-
-                </div>
-
-                <div className="back">
-                  <div className="logo-container">
-                    <img className={logoClass} src={crypto_logo} />
-                  </div>
-                </div>
-
-              </div>
+            <div className='table'>
+                <CoinMarketTableHead />
+                <CoinMarketTableBody  />
             </div>
+
       );
   }
 
@@ -52,8 +35,8 @@ class CoinMarketTable extends Component{
 
     render() {
 
-      if(this.props.hasErrored) return this.renderError();
-      else if(this.props.isLoading)  return this.renderLoading();
+      //if(this.props.hasErrored) return this.renderError();
+      //else if(this.props.isLoading)  return this.renderLoading();
 
       return this.renderTable();
 
@@ -69,10 +52,6 @@ class CoinMarketTable extends Component{
 function mapStateToProps(state){
 
     return {
-        run_flip_animation: state.run_flip_animation,
-
-        view_sort_obj: state.view_sort_obj,
-
         hasErrored: state.fetchHasErrored,
         isLoading: state.fetchIsLoading
       }
@@ -82,7 +61,8 @@ function mapStateToProps(state){
 function matchDispatchToProps(dispatch){
 
   return {
-      fill_crypto_type_data_set: () => dispatch(fill_crypto_type_data_set())
+      fill_crypto_type_data_set: () => dispatch(fill_crypto_type_data_set()),
+      update_view_width: (width) => dispatch(update_view_width(width))
   }
 
 }

@@ -3,7 +3,7 @@ import CoinMarketHeader from '../containers/coin-market-header';
 import CoinMarketTable from '../containers/coin-market-table';
 
 const App = () => (
-  <div>
+  <div className="screen">
       <CoinMarketHeader />
       <CoinMarketTable />
   </div>

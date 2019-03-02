@@ -35,63 +35,80 @@ class CoinMarketTableHead extends Component{
     render() {
 
       return (
+            <div className="theads">
+              <div className="thead-options">
+                <div className="tr-options">
 
-              <thead>
-                <tr className="headOptions">
-                  <th colSpan="8">
+                  <div className="th-CryptoSearchText">
                     <CryptoSearchText />
+                  </div>
 
+                  <div className="th-CryptoTypeSelect">
                     <CryptoTypeSelect />
+                  </div>
 
+                  <div className="th-FlipButton_SetInterval">
                     <div className="compareButton" onClick={() => this.flipProcess()}><span>{this.props.flipped_view ? "View All" : "Compare Selected"}</span></div>
 
-                    <ResultsLimitText />
-
-                    <CurrencyReferenceSelect />
-
+                    <label htmlFor="setInterval" className="setIntervalLabelMins" >mins</label>
                     <SetIntervalText />
-                    <label htmlFor="setInterval" className="setIntervalLabel" >Refresh Rate (mins):</label>
+                    <label htmlFor="setInterval" className="setIntervalLabel" >Refresh Rate:</label>
 
-                  </th>
-                </tr>
+                  </div>
 
+                  <div className="th-CurrencyReferenceSelect">
+                    <CurrencyReferenceSelect />
+                  </div>
 
-                <tr className="headNavigation">
+                  <div className="th-ResultsLimitText">
+                    <ResultsLimitText />
+                  </div>
+
+                </div>
+              </div>
+
+              <div className="thead-navigation">
                   <NavigationRow />
-                </tr>
+              </div>
 
-
-                  <tr className="headTitles">
-                    <th>✕</th>
-                    <th>
-                      <span>#</span>
-                    </th>
-                    <th>
-                      <span>Name</span>
-                      <span><HeaderSortingOptions header={"name"} /></span>
-                    </th>
-                    <th>
-                      <span>Market Cap</span>
-                      <span><HeaderSortingOptions header={"market_cap"} /></span>
-                    </th>
-                    <th>
-                      <span>Price</span>
-                      <span><HeaderSortingOptions header={"price"} /></span>
-                    </th>
-                    <th>
-                      <span>Volume 24H</span>
-                      <span><HeaderSortingOptions header={"volume_24h"} /></span>
-                    </th>
-                    <th>
-                      <span>Circulating Supply</span>
-                      <span><HeaderSortingOptions header={"circulating_supply"} /></span>
-                    </th>
-                    <th>
-                      <span>Change <CryptoChangeTimescaleSelect /> </span>
-                      <span><HeaderSortingOptions header="percent_change_" /></span>
-                    </th>
-                  </tr>
-                </thead>
+              <div className="thead-headers">
+                <div className="tr-headTitles">
+                  <div className="th-X">
+                    <span>✕</span>
+                  </div>
+                  <div className="th-Num">
+                    <span>#</span>
+                  </div>
+                  <div className="th-Name">
+                    <span>Name</span>
+                    <HeaderSortingOptions header="name" />
+                  </div>
+                  <div className="th-Market_Cap">
+                    <span>Market Cap</span>
+                    <HeaderSortingOptions header="market_cap" />
+                  </div>
+                  <div  className="th-Price">
+                    <span>Price</span>
+                    <HeaderSortingOptions header="price" />
+                  </div>
+                  <div className="th-Volume">
+                    <span>Volume 24H</span>
+                    <HeaderSortingOptions header="volume_24h" />
+                  </div>
+                  <div className="th-Supply">
+                    <span>Circulating Supply</span>
+                    <HeaderSortingOptions header="circulating_supply" />
+                  </div>
+                  <div className="th-Change">
+                    <div className="timescale_head">
+                      <span>Change</span>
+                      <CryptoChangeTimescaleSelect />
+                    </div>
+                    <HeaderSortingOptions header="percent_change_" />
+                  </div>
+                </div>
+              </div>
+            </div>
         );
     }
 
@@ -126,7 +143,7 @@ function matchDispatchToProps(dispatch){
   return {
       flip_view: (view) => dispatch(flip_view(view)),
       set_run_flip_animation: (run) => dispatch(set_run_flip_animation(run)),
-      search_for_matches: (val, search_list) => dispatch(search_for_matches(val, search_list)),
+      search_for_matches: (val, search_list) => dispatch(search_for_matches(val, search_list))
   }
 
 }

@@ -46,7 +46,7 @@ class HeaderSortingOptions extends Component{
     }
 
         return (
-          <div onClick={() => this.applySorting(sort_by) } >
+          <div className="sort-arrs" onClick={() => this.applySorting(sort_by) } >
               <img src={imageSource} className="sortingArrow" />
           </div>
 

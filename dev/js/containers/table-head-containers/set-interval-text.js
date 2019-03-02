@@ -54,6 +54,7 @@ class SetIntervalText extends Component{
           <input  type="number"
                   id="setInterval"
                   className="setInterval"
+                  min="1" max="99"
                   defaultValue={defaultInterval}
                   onChange={(e) => this.setRefreshInterval(e, timoutTyping) }
             />

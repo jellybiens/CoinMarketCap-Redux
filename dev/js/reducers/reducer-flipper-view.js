@@ -11,3 +11,12 @@ export const run_flip_animation = (state = false, action) => {
         default : return state
     }
 }
+
+
+export const view_width = (state = null, action) => {
+  switch(action.type){
+    case 'VIEW_WIDTH' : return action.width;
+    default : return state
+
+  }
+}

@@ -13,6 +13,13 @@ export {search_for_matches} from './action-search';
 
 
 //views
+  //to pickup how to output large numbers on the screen
+  export const update_view_width = (width) => ({
+    type: 'VIEW_WIDTH',
+    width
+  });
+
+
   //is the table view flipped to the compare view?
   export const flip_view = (view) => ({
     type: 'FLIPPER_VIEW',

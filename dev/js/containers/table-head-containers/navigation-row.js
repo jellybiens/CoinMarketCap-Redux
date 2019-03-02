@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { view_sort_obj_update } from '../../actions/actions-index';
-
+import  paging_arrow  from '../../images/paging-arrow.png';
 
 class NavigationRow extends Component{
 
@@ -35,23 +35,29 @@ class NavigationRow extends Component{
       let pageResTotal = "Page " + (((start-1) / limit)+1) + " of " + (Math.floor(coins_list_len / limit)+1);
 
       return (
-            <th colSpan="8">
+        <div className="tr-headNavigation">
 
-                <div  className={start > 1 ? "linkBack" : "linkBack inactive-button"}
-                      onClick={() => this.goBackward(coins_list_len, start, limit)}>
-                  <span>&laquo;</span>
+                <div className="th-linkBack">
+                  <div  className={start > 1 ? "linkBack" : "linkBack inactive-button"}
+                        onClick={() => this.goBackward(coins_list_len, start, limit)}>
+                    <img className="paging_arrow" src={paging_arrow} />
+                  </div>
                 </div>
 
-                <div  className={(start+limit) <= coins_list_len ? "linkForward" : "linkForward inactive-button"}
-                      onClick={() => this.goForward(coins_list_len, start, limit)}>
-                  <span>&raquo;</span>
+                <div className="th-linkMiddle">
+                  <div className="linkMiddle">
+                    <span>{pageResTotal}</span>
+                  </div>
                 </div>
 
-                <div className="linkMiddle">
-                  <span>{pageResTotal}</span>
+                <div className="th-linkForward">
+                  <div  className={(start+limit) <= coins_list_len ? "linkForward" : "linkForward inactive-button"}
+                        onClick={() => this.goForward(coins_list_len, start, limit)}>
+                    <img className="paging_arrow" src={paging_arrow} />
+                  </div>
                 </div>
 
-            </th>
+            </div>
 
         );
     }
