@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { flip_view, set_run_flip_animation, search_for_matches } from '../actions/actions-index';
+import { flip_view, set_run_flip_animation, search_for_matches, view_sort_obj_update } from '../actions/actions-index';
 
 
 import CryptoSearchText             from './table-head-containers/crypto-search-txt';
@@ -28,6 +28,9 @@ class CoinMarketTableHead extends Component{
             let search_list = !this.props.flipped_view ? this.props.compare_list : this.props.main_coins_list;
             this.props.search_for_matches(val, search_list)
           }
+          let newMainSort = Object.assign({}, this.props.view_sort_obj);
+          newMainSort["start"] = 1;
+          this.props.view_sort_obj_update(newMainSort);
           this.props.flip_view(!this.props.flipped_view)
       }, 375);
     }
@@ -143,7 +146,8 @@ function matchDispatchToProps(dispatch){
   return {
       flip_view: (view) => dispatch(flip_view(view)),
       set_run_flip_animation: (run) => dispatch(set_run_flip_animation(run)),
-      search_for_matches: (val, search_list) => dispatch(search_for_matches(val, search_list))
+      search_for_matches: (val, search_list) => dispatch(search_for_matches(val, search_list)),
+      view_sort_obj_update: (sortObj) => dispatch(view_sort_obj_update(sortObj))
   }
 
 }
