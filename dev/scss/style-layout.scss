@@ -109,13 +109,21 @@ html, body, #root{
 		}
 	}
 
-  .image-container{
-    .error_occurred, .table_loading{
-     margin:auto;
-     display: block;
-     @include height-width(100%,auto);
-    }
-  }
+	.image-container{
+		@include height-width(80%, 100%);
+		display: inline;
+		float: left;
+		.image-flex-cointainer{
+			@include height-width();
+			display:flex;
+			.error_occurred, .table_loading{
+				@include height-width(70%, auto);
+				margin: auto;
+			}
+		}
+	}
+}
+
 
 	.table{
 		@include height-width(80%, 100%);

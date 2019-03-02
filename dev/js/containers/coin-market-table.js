@@ -29,9 +29,17 @@ class CoinMarketTable extends Component{
       );
   }
 
-  renderLoading(){ return ( <div className="image-container"><img className="table_loading" src={table_loading} /></div> ); }
+  renderLoading(){ return ( <div className="image-container">
+                              <div className="image-flex-container">
+                                <img className="table_loading" src={table_loading} />
+                              </div>
+                            </div> ); }
 
-  renderError(){ return ( <div className="image-container"><img className="error_occurred" src={error_occurred} /></div> ); }
+  renderError(){ return ( <div className="image-container">
+                            <div className="image-flex-container">
+                              <img className="error_occurred" src={error_occurred} />
+                            </div>
+                          </div> ); }
 
     render() {
 
