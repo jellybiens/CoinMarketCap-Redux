@@ -77,10 +77,22 @@ $darkText: #111;
 html, body, #root{
 	margin: 0 auto;
 	font-family: Courier New;
-	max-width:900px;
   height: 100%;
   width: 100%;
 }
+
+@media screen and (min-width: $break-large) {
+   html, body, #root{
+	max-width:900px;
+}
+}
+@media screen and (max-width: $break-small) {
+   html, body, #root{
+	max-width:none;
+}
+}
+
+
 
 ::-webkit-scrollbar {
 	display: none;
