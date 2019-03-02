@@ -43,8 +43,8 @@ class CoinMarketTable extends Component{
 
     render() {
 
-      //if(this.props.hasErrored) return this.renderError();
-      //else if(this.props.isLoading)  return this.renderLoading();
+      if(this.props.hasErrored) return this.renderError();
+      else if(this.props.isLoading)  return this.renderLoading();
 
       return this.renderTable();
 
