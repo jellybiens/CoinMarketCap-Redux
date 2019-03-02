@@ -425,8 +425,11 @@ html, body, #root{
   	          }
 
 						}
-            [class^="tr-"]:nth-child(even) {
+						[class^="tr-"]:nth-child(even) {
               background: $nthEvenC;
+            }
+						[class^="tr-"]:last-child {
+              margin-bottom:200px;
             }
 
 					}
