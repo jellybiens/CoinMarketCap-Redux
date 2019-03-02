@@ -218,8 +218,8 @@ html, body, #root{
 							img.paging_arrow{
 								margin: auto;
 								@include height-width();
-								filter: invert(100);
-								transform: rotateZ(180deg);
+								@include browserSupport(filter, invert(100));
+								@include browserSupport(transform, rotateZ(180deg));
 							}
 						}
 					}
@@ -246,7 +246,7 @@ html, body, #root{
 							img.paging_arrow{
 								margin: auto;
 								@include height-width();
-								filter: invert(100);
+								@include browserSupport(filter, invert(100));
 							}
 						}
 					}
@@ -340,13 +340,13 @@ html, body, #root{
       overflow-y: scroll;
 
       .flip {
-    		transform: rotateY(180deg);
+    		@include browserSupport(transform, rotateY(180deg));
         perspective: 5000px;
     	}
 
 			.flipper{
 				@include height-width();
-        transition: 1s;
+        @include browserSupport(transition, 1s);
       	transform-style: preserve-3d;
 
         .front, .back{
@@ -354,10 +354,10 @@ html, body, #root{
         }
 
         .front{
-      		transform: rotateY(0deg);
+      		@include browserSupport(transform, rotateY(0deg));
       	}
       	.back{
-      		transform: rotateY(180deg);
+      		@include browserSupport(transform, rotateY(180deg));
       	}
 
 				.front{
@@ -455,14 +455,14 @@ html, body, #root{
 
 						}
             .logo-image-spin{
-              animation-name: rotate;
-              animation-duration: 1.5s;
-              animation-iteration-count: infinite;
-              animation-timing-function: linear;
+              @include browserSupport(animation-name, rotate);
+              @include browserSupport(animation-duration, 1.5s);
+              @include browserSupport(animation-iteration-count, infinite);
+              @include browserSupport(animation-timing-function, linear);
             }
             @keyframes rotate {
-            from {transform: rotateY(-90deg);}
-            to {transform: rotateY(90deg);}
+            from {@include browserSupport(transform, rotateY(-90deg));}
+            to {@include browserSupport(transform, rotateY(90deg));}
             }
 					}
 				}
