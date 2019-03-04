@@ -21,7 +21,7 @@ class CoinMarketTableBody extends Component{
       newValString = newVal == 0 ? parseFloat(Math.round(val * 1000000) / 1000000) : newVal;
 
       //create comma seperation each group of 1,000
-      if(parseFloat(newVal) >= 1000){
+      if(parseFloat(newVal) >= 1000 || parseFloat(newVal) <= -1000){
         let parts = newVal.toFixed(2).toString().split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         newValString = parts.join(".");
@@ -119,8 +119,9 @@ class CoinMarketTableBody extends Component{
                   : timescale == "percent_change_24h" ? this.trycatchParse(coin.quote[cur].percent_change_24h)
                   :                      this.trycatchParse(coin.quote[cur].percent_change_7d);
 
-      colour      = Math.sign(change) == 1  ? "#00990f" :
-                    Math.sign(change) == -1 ? "#990000" : "#111";
+
+      colour      = Math.sign(parseFloat(change)) == 1  ? "#00990f" :
+                    Math.sign(parseFloat(change)) == -1 ? "#990000" : "#111";
       let style = {"color":colour};
 
       let checked = this.props.compare_list.includes(coin) ? true : false;
@@ -130,13 +131,13 @@ class CoinMarketTableBody extends Component{
      table.push(
                <div className="tr-coininfo" key={id}>
                  <div className="td-check"><input type="checkbox" defaultChecked={checked} id={"key"+pos} onChange={(e) => this.addToCompare(e.target.checked, coin)} /></div>
-                 <div className="td-pos">{pos}</div>
+                 <div className="td-pos"><span>{pos}</span></div>
                  <div className="td-name"><div className="coinLogo"><img src={crypto_logo} /></div><span>{name}</span></div>
-                 <div className="td-mar-cap">{market_cap}</div>
-                 <div className="td-price">{price}</div>
-                 <div className="td-vol">{volume_24h}</div>
-                 <div className="td-supply">{supply}</div>
-                 <div className="td-change" style={style}>{change}</div>
+                 <div className="td-mar-cap"><span>{market_cap}</span></div>
+                 <div className="td-price"><span>{price}</span></div>
+                 <div className="td-vol"><span>{volume_24h}</span></div>
+                 <div className="td-supply"><span>{supply}</span></div>
+                 <div className="td-change" style={style}><span>{change}</span></div>
                </div>
           );
 

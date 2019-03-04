@@ -1,0 +1,119 @@
+$break-small: 510px;
+$break-large: 511px;
+
+$table-colour: #bc5617;
+$table-columns: (3%, 3%, 16%, 18%, 10%, 17%, 20%, 13%);
+
+$defaultC:		$table-colour;
+$lighter:		lighten($table-colour, 10%);
+$lightest:	lighten($table-colour, 20%);
+$darkest:	darken($table-colour, 20%);
+
+$nthOddC:	lighten($table-colour, 65%);
+$nthEvenC:	lighten($table-colour, 55%);
+
+$lightText: #ffe;
+$darkText: #111;
+
+@mixin browserSupport($propName, $propVar){
+	-webkit-#{$propName}: $propVar;
+	-khtml-#{$propName}: $propVar;
+	-moz-#{$propName}: $propVar;
+	-ms-#{$propName}: $propVar;
+	#{$propName}: $propVar;
+}
+
+@mixin button-css($colour, $text, $height: 50%, $width: 70% ){
+  height: $height;
+  width: $width;
+	background-image: linear-gradient(-13deg, $colour 10%, lighten($colour, 20%) 56%),
+										linear-gradient(274deg, $colour, lighten($colour, 20%));
+  border: 2px ridge lighten($colour, 20%);
+  margin:auto;
+  text-align: center;
+  padding: 2px 2px;
+  border-radius: 3px;
+  display: flex;
+  box-shadow: 0 0px 1px 1px #000;
+
+	span{
+				font-weight: bold;
+				font-size: 14px;
+				margin: auto;
+				color:$lightText;
+        @include height-width(auto, auto);
+				&:after{
+					content: $text;
+				}
+			}
+
+	&:hover{
+		@include browserSupport(filter, brightness(120%));
+    cursor: pointer;
+	}
+	&:active{
+		@include browserSupport(filter, brightness(85%));
+	}
+}
+
+.inactive-button{
+	@include browserSupport(filter, grayscale(100%) !important)
+	&:hover{
+		@include browserSupport(filter, brightness(100%) grayscale(100%) !important);
+		cursor: default !important;
+	}
+	&:active{
+		@include browserSupport(filter, brightness(100%) grayscale(100%) !important);
+	}
+}
+
+
+
+@mixin height-width($height: 100%, $width: 100%) {
+	height: $height;
+  width: $width;
+}
+
+
+@mixin top-left($t: 0, $l: 0) {
+	top: $t;
+  left: $l;
+}
+
+@mixin grid-arrange($rs:1, $re:1, $cs:1, $ce:1) {
+  display: grid;
+  display: -ms-grid;
+
+	grid-row-start: $rs;
+	grid-row-end: $re;
+	grid-column-start: $cs;
+	grid-column-end: $ce;
+}
+@mixin grid-template($gtr: 100%, $gtc: 100%) {
+  display: grid;
+  display: -ms-grid;
+  grid-template-rows: $gtr;
+  grid-template-columns: $gtc
+
+}
+
+
+html, body, #root{
+	margin: 0 auto;
+	font-family: Courier New;
+	max-width:900px;
+  height: 100%;
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+
+@media screen and (min-width: $break-large) {
+    @import "style-desktop";
+}
+@media screen and (max-width: $break-small) {
+    @import "style-mobile";
+}

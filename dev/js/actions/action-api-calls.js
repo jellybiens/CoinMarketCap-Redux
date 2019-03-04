@@ -167,7 +167,8 @@ const update_list_data = (main_list, sorting_list) => {
 
 //UNUSED FUNCTION
 //This is a way in which I could merge all the different currencies into one
-//data set, so that when the user changes which currecy they want the coins
+//data set from a limit of 40 conversions per call,
+//so that when the user changes which currecy conversion they want the coins
 //to be converted to, we dont have to constantly keep on calling the API
 //
 //This is something I was planning to do, (read full notes in write up) but

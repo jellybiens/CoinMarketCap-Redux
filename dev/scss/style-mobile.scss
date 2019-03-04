@@ -1,0 +1,420 @@
+
+
+.screen{
+	@include height-width();
+	overflow:hidden;
+
+
+	.header{
+		position: fixed;
+		@include height-width(10%, 100%);
+		@include top-left();
+
+		.logo-cointainer{
+			position: absolute;
+			@include height-width();
+
+			.logo-flex-cointainer{
+				position: absolute;
+				display: flex;
+				@include height-width();
+
+				.logo{
+					@include height-width(auto, 80%);
+					margin:auto;
+				}
+			}
+		}
+	}
+
+
+
+	.image-container{
+		position: fixed;
+		@include height-width(80%, 100%);
+		@include top-left(20%, 0);
+		.image-flex-container{
+			.error_occurred, .table_loading{
+				margin: auto;
+				@include height-width(auto, 100%);
+			}
+		}
+	}
+
+
+	.table{
+
+		[class^="th-"],[class^="td-"] {
+      overflow:hidden;
+      box-sizing: border-box;
+      padding: 2px;
+    }
+    [class^="tr-"] {
+      overflow:hidden;
+      box-sizing: border-box;
+    }
+
+
+		.theads{
+
+
+			.thead-options{
+				position: fixed;
+				@include height-width(10%, 100%);
+				@include top-left(10%, 0);
+
+				.tr-options{
+					@include height-width(100%, 100%);
+					@include grid-template(33% 33% 33%, 50% 50%);
+
+
+						.th-CryptoSearchText{
+							@include grid-arrange(1, 1, 1, 1);
+						}
+						.th-CryptoTypeSelect{
+							@include grid-arrange(3, 3, 1, 1);
+						}
+						.th-CurrencyReferenceSelect{
+							@include grid-arrange(1, 1, 2, 2);
+						}
+						.th-ResultsLimitText{
+							@include grid-arrange(3, 3, 2, 2);
+						}
+						.th-FlipButton_SetInterval{
+							@include grid-template(100%, 50% 50%);
+							@include grid-arrange(2, 2, 1, 3);
+							.setInterval{
+								margin: 0 -4px 0 5px;
+								width:2.5em;
+								left: 110px;
+							}
+							.setIntervalLabel{
+								font-size: 14px;
+								margin-top: 2px;
+	    					margin-right: -6px;
+								left: 8px;
+							}
+							.setIntervalLabelMins{
+								font-size: 12px;
+								margin-top: 7px;
+								left: 155px;
+							}
+							.setIntervalLabel, .setInterval, .setIntervalLabelMins{
+								@include grid-arrange(1, 1, 2, 2);
+								position: relative;
+							}
+
+							.compareButton{
+								@include grid-arrange(1, 1, 1, 1);
+								@include button-css($defaultC, "", auto, auto );
+								margin: 0 5px;
+	              min-width: fit-content;
+	              span{
+										font-size: 12px !important;
+	                    white-space: nowrap;
+	              }
+							}
+						}
+
+				}
+			}
+			.thead-navigation{
+				position: fixed;
+				@include height-width(10%, 100%);
+				@include top-left(20%, 0);
+
+				border: 1px solid $lightest;
+				box-sizing: border-box;
+
+				.tr-headNavigation{
+					@include height-width();
+          background-color: $nthEvenC;
+					    display: flex;
+
+					.th-linkBack{
+						@include height-width(100%, 30%);
+						    display: flex;
+
+						.linkBack{
+							margin:auto;
+              @include button-css($defaultC, "", 15vw, 15vw );
+							img.paging_arrow{
+								margin: auto;
+								@include height-width();
+								@include browserSupport(filter, invert(100));
+								@include browserSupport(transform, rotateZ(180deg));
+							}
+						}
+					}
+					.th-linkMiddle{
+						@include height-width(100%, 40%);
+									flex-direction: column;
+									justify-content: center;
+									align-items: center;
+									display: flex;
+									height: 10vh;
+						.linkMiddle{
+							margin:auto;
+							height:auto;
+							color:$darkText;
+              text-align: center;
+              font-weight: bold;
+							span{
+									 font-size: 2.5vh;
+								}
+						}
+					}
+					.th-linkForward{
+						@include height-width(100%, 30%);
+								display: flex;
+
+						.linkForward{
+							margin:auto;
+              @include button-css($defaultC, "", 15vw, 15vw );
+							img.paging_arrow{
+								margin: auto;
+								@include height-width();
+								@include browserSupport(filter, invert(100));
+							}
+						}
+					}
+				}
+			}
+			.thead-headers{
+				position: fixed;
+				@include height-width(70%, 130px);
+				@include top-left(30%, 0);
+
+				.tr-headTitles{
+					position:absolute;
+					@include height-width();
+          background: $defaultC;
+          @include browserSupport('background', linear-gradient(to left, $lightest 0%, $lighter 33%, $defaultC 100%));
+          border-bottom: 2px solid $darkest;
+
+					@for $i from 1 through 8 {
+					[class^="th-"]:nth-child(#{$i}) {
+						@include height-width(12.5%, 130px);
+						@if $i == 7 { 	font-size: 14px; }
+						@else if $i == 8 { 	font-size: 17px; }
+						@else { font-size: 20px; }
+
+						text-align: center;
+						display:flex;
+						box-sizing: border-box;
+						font-weight: bold;
+						color: $lightText;
+						border-bottom: 2px solid $defaultC;
+						border: 1px solid $lightest;
+
+						span{
+									@if $i < 3 {
+										@include height-width(9vh, 130px);
+									}
+									@else{
+										@include height-width(9vh, 90px);
+									}
+
+								flex-direction: column;
+								justify-content: center;
+								align-items: center;
+								display: flex;
+								}
+
+							div.sort-arrs{
+									display: flex;
+	              	@include height-width(100%, 40px);
+	              	cursor:pointer;
+
+								img.sortingArrow{
+	    						margin: auto;
+	                @include height-width(16px,20px);
+	                @include browserSupport(filter, invert(100%));
+	                @include browserSupport(transform, rotateZ(-90deg) translateX(-5px));
+	              }
+								&:active{
+									@include browserSupport(filter, invert(80%) !important);
+									img.sortingArrow{
+										@include browserSupport(filter, invert(80%) !important);
+									}
+								}
+	            }
+
+							@if $i == 8 {
+						div.timescale_head{
+								@include height-width(9vh, 100px);
+								display: flex;
+
+							span{
+								width:70px;
+							}
+
+							select.timeScaleSelectChange{
+								@include height-width(20px, 30px);
+								-webkit-appearance: none;
+								margin: auto;
+							}
+							div.sort-arrs{
+										display: flex;
+		              	@include height-width(100%, 50px);
+		              	cursor:pointer;
+							}
+
+						}
+					}
+
+					}
+				}
+
+				}
+			}
+		}
+		.tbody{
+			position: fixed;
+			@include height-width(70%, 100%);
+			@include top-left(30%, 130px);
+			overflow-x: scroll;
+
+			.responseMessage{
+				width: 40%;
+				position:relative;
+				top:20px;
+				text-align: center;
+				span{}
+			}
+
+			.flip {
+    		@include browserSupport(transform, rotateX(180deg));
+        perspective: 5000px;
+    	}
+
+			.flipper{
+				position:relative;
+				@include height-width(100%, max-content);
+				@include browserSupport(transition, 1s);
+      	transform-style: preserve-3d;
+
+				.front, .back{
+          backface-visibility: hidden;
+        }
+
+        .front{
+      		@include browserSupport(transform, rotateX(0deg));
+      	}
+      	.back{
+      		@include browserSupport(transform, rotateX(180deg));
+      	}
+
+
+				.front{
+					position:relative;
+					@include height-width(100%, max-content);
+
+					.tbody-coinslist{
+						position:absolute;
+						display:flex;
+						@include height-width(100%, max-content);
+
+
+						.responseMessage{
+							margin-top:20px;
+							text-align: center;
+							span{}
+						}
+
+						[class^="tr-"]:last-child {
+              border-right: 1px solid $lightest;
+	              margin-right: 130px;
+            }
+
+						.tr-coininfo{
+							@include height-width(100%, 100px);
+							border-left: 1px solid $lightest;
+
+							@for $i from 1 through 8 {
+
+  	            [class^="td-"]:nth-of-type(#{$i}) {
+                  @include height-width(12.5%, 100px);
+  								font-size: 20px;
+                  text-align: center;
+
+                  border-bottom: 1px solid $lightest;
+        					overflow: hidden;
+
+									@if $i == 1{
+											display: flex;
+											input{
+												margin:auto !important;
+												@include height-width(50px, 50px);
+											}
+									}
+		              @else if $i == 3 {
+                    span{
+											position: sticky;
+    									top: 45%;
+      							}
+                    .coinLogo{
+											position: sticky;
+    									top: 10%;
+                      img{
+	                      @include height-width(50%, auto);
+                        margin:auto;
+                        display:block;
+        							}
+                    }
+                  }
+									@else{
+										span{
+											flex-direction: column;
+											justify-content: center;
+											align-items: center;
+											display: flex;
+											height: 10vh;
+										}
+									}
+                  @if $i == 8 {
+                    font-weight: bold;
+                    border-right: 1px solid $lightest;
+                  }
+
+  	            }
+  	          }
+						}
+						[class^="tr-"]:nth-child(even) {
+              background: $nthEvenC;
+            }
+						[class^="tr-"]:nth-child(even) {
+              background: $nthEvenC;
+            }
+
+					}
+				}
+				.back{
+					@include height-width();
+					position:absolute;
+					top:0;
+					.logo-container{
+						@include height-width();
+						display:flex;
+
+						.logo-image{
+							@include height-width(50%, auto);
+							margin:auto;
+
+						}
+            .logo-image-spin{
+              @include browserSupport(animation-name, rotate);
+              @include browserSupport(animation-duration, 1.5s);
+              @include browserSupport(animation-iteration-count, infinite);
+              @include browserSupport(animation-timing-function, linear);
+            }
+            @keyframes rotate {
+            from {@include browserSupport(transform, rotateY(-90deg));}
+            to {@include browserSupport(transform, rotateY(90deg));}
+            }
+					}
+				}
+			}
+		}
+	}
+}

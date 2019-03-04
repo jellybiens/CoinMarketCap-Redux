@@ -12,14 +12,6 @@ class CoinMarketHeader extends Component{
 
     render() {
 
-      let links = (<div className="links-container">
-                    <div className="links-list">
-                      <a href="https://twitter.com/jellybiens_"><img src={twitterImg} /></a>
-                      <a href="https://www.linkedin.com/in/ethan-w-a1676a92/"><img src={linkedinImg} /></a>
-                      <a href="https://github.com/jellybiens"><img src={githubImg} /></a>
-                      <a href="https://ethanwatsonreactcv.herokuapp.com/">Ethan Watson React CV</a>
-                    </div>
-                  </div>)
 
 
 
