@@ -26,7 +26,6 @@ console.log("api: fill_crypto_type_data_set");
               convert:  "EUR",
               cryptocurrency_type: "coins"
             },
-    headers: { 'X-CMC_PRO_API_KEY': '5ef4101a-93b7-4b32-9367-824a9c3b978a' },
     json: true,
     gzip: true
   };
@@ -106,7 +105,6 @@ export const refresh_coins_data_set = (sortObj, coins_lists) => {
                 convert:  sortObj["convert"],
                 limit:    5000
               },
-      headers: { 'X-CMC_PRO_API_KEY': '5ef4101a-93b7-4b32-9367-824a9c3b978a' },
       json: true,
       gzip: true
     };

@@ -30,9 +30,7 @@ class NavigationRow extends Component{
       let limit = this.props.view_sort_obj["limit"];
       let coins_list_len = this.get_view_filtered_total();
 
-      let page_limit = coins_list_len % limit === 0 ? (Math.floor(coins_list_len / limit)) : (Math.floor(coins_list_len / limit)+1);
-
-      let pageResTotal = "Page " + (((start-1) / limit)+1) + " of " + (Math.floor(coins_list_len / limit)+1);
+      let pageResTotal = "Page " + (((start-1) / limit)+1) + " of " + (Math.ceil(coins_list_len / limit));
 
       return (
         <div className="tr-headNavigation">
